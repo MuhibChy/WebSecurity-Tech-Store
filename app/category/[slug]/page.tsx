@@ -178,7 +178,7 @@ export default function CategoryPage() {
                     <GlassCard className="p-6">
                       <h3 className="font-semibold text-white mb-4">Categories</h3>
                       <div className="space-y-2">
-                        {availableSubcategories.map(subcategory => (
+                        {availableSubcategories.map(subcategory => subcategory && (
                           <label key={subcategory} className="flex items-center gap-2 cursor-pointer">
                             <input
                               type="checkbox"
