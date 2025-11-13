@@ -1,0 +1,71 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>WebSecurity.com - Test Page</title>
+    <style>
+        body {
+            background: linear-gradient(135deg, #0f172a 0%, #581c87 50%, #0f172a 100%);
+            color: white;
+            font-family: Arial, sans-serif;
+            min-height: 100vh;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            margin: 0;
+        }
+        .container {
+            text-align: center;
+            padding: 2rem;
+            background: rgba(255, 255, 255, 0.1);
+            backdrop-filter: blur(16px);
+            border-radius: 12px;
+            border: 1px solid rgba(255, 255, 255, 0.2);
+        }
+        h1 {
+            background: linear-gradient(to right, #60a5fa, #a855f7);
+            -webkit-background-clip: text;
+            background-clip: text;
+            -webkit-text-fill-color: transparent;
+            font-size: 3rem;
+            margin-bottom: 1rem;
+        }
+        .status {
+            color: #10b981;
+            font-size: 1.5rem;
+            margin-bottom: 1rem;
+        }
+        .info {
+            color: #d1d5db;
+            margin-bottom: 2rem;
+        }
+        .button {
+            background: rgba(59, 130, 246, 0.8);
+            color: white;
+            padding: 12px 24px;
+            border: none;
+            border-radius: 8px;
+            text-decoration: none;
+            display: inline-block;
+            transition: all 0.3s ease;
+        }
+        .button:hover {
+            background: rgba(59, 130, 246, 1);
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <h1>WebSecurity.com</h1>
+        <div class="status">✅ GitHub Pages is Working!</div>
+        <div class="info">
+            <p>CSS and glassmorphism effects are loading correctly.</p>
+            <p>The full Next.js site will be deployed shortly.</p>
+        </div>
+        <a href="https://github.com/MuhibChy/WebSecurity-Tech-Store" class="button">
+            View Repository
+        </a>
+    </div>
+</body>
+</html>
