@@ -4,36 +4,29 @@ import Link from 'next/link'
 import Header from '@/components/Header'
 import Footer from '@/components/Footer'
 import GlassCard from '@/components/ui/GlassCard'
-import { Shield, Laptop, Monitor, Gamepad2, Smartphone, Headphones, Router, Lock } from 'lucide-react'
+import ProductCard from '@/components/ProductCard'
+import { Shield, Laptop, Monitor, Gamepad2, Smartphone, Headphones, Router, Lock, Star, TrendingUp, Zap } from 'lucide-react'
+import { categories, getFeaturedProducts, getNewProducts, getDiscountedProducts } from '@/lib/products'
 
 export default function Home() {
-  const featuredCategories = [
-    { name: 'Security Systems', slug: 'security-systems', icon: Shield, count: '150+ Products', color: 'text-red-400' },
-    { name: 'Laptops', slug: 'laptops', icon: Laptop, count: '200+ Products', color: 'text-blue-400' },
-    { name: 'Desktops', slug: 'desktops', icon: Monitor, count: '180+ Products', color: 'text-green-400' },
-    { name: 'Gaming PCs', slug: 'gaming-pcs', icon: Gamepad2, count: '120+ Products', color: 'text-purple-400' },
-    { name: 'Mobile Phones', slug: 'mobile-phones', icon: Smartphone, count: '300+ Products', color: 'text-yellow-400' },
-    { name: 'Accessories', slug: 'accessories', icon: Headphones, count: '500+ Products', color: 'text-pink-400' },
-    { name: 'Networking', slug: 'networking', icon: Router, count: '80+ Products', color: 'text-cyan-400' },
-    { name: 'Software', slug: 'software', icon: Lock, count: '60+ Products', color: 'text-orange-400' },
-  ]
+  const featuredProducts = getFeaturedProducts()
+  const newProducts = getNewProducts()
+  const discountedProducts = getDiscountedProducts()
 
-  const sampleProducts = [
-    {
-      id: 1,
-      name: 'Professional Security Camera System',
-      price: '$299.99',
-      image: 'https://images.unsplash.com/photo-1558618666-fcd25c85cd64?w=300&h=200&fit=crop',
-      category: 'Security Systems'
-    },
-    {
-      id: 2,
-      name: 'Gaming Laptop RTX 4070',
-      price: '$1,299.99',
-      image: 'https://images.unsplash.com/photo-1603302576837-37561b2e2302?w=300&h=200&fit=crop',
-      category: 'Laptops'
-    }
-  ]
+  const featuredCategories = categories.map(category => ({
+    ...category,
+    count: `${Math.floor(Math.random() * 50) + 20}+ Products`,
+    color: {
+      'security-systems': 'text-red-400',
+      'laptops': 'text-blue-400',
+      'desktops': 'text-green-400',
+      'gaming-pcs': 'text-purple-400',
+      'mobile-phones': 'text-yellow-400',
+      'accessories': 'text-pink-400',
+      'networking': 'text-cyan-400',
+      'software': 'text-orange-400',
+    }[category.id] || 'text-gray-400'
+  }))
 
   return (
     <main className="min-h-screen">
@@ -69,9 +62,19 @@ export default function Home() {
           </h2>
           <div className="grid grid-cols-2 md:grid-cols-4 gap-6">
             {featuredCategories.map((category) => {
-              const IconComponent = category.icon
+              const iconMap = {
+                'Shield': Shield,
+                'Laptop': Laptop,
+                'Monitor': Monitor,
+                'Gamepad2': Gamepad2,
+                'Smartphone': Smartphone,
+                'Headphones': Headphones,
+                'Router': Router,
+                'Lock': Lock
+              }
+              const IconComponent = iconMap[category.icon as keyof typeof iconMap] || Shield
               return (
-                <Link key={category.slug} href={`/category/${category.slug}`}>
+                <Link key={category.id} href={`/category/${category.id}`}>
                   <GlassCard className="text-center p-6 h-full">
                     <IconComponent className={`h-12 w-12 mx-auto mb-4 ${category.color}`} />
                     <h3 className="text-lg font-semibold mb-2">{category.name}</h3>
@@ -84,27 +87,78 @@ export default function Home() {
         </div>
       </section>
 
-      {/* Sample Products */}
+      {/* Featured Products */}
       <section className="py-16 px-4">
         <div className="container mx-auto">
-          <h2 className="text-4xl font-bold text-center mb-12 gradient-text">
-            Featured Products
-          </h2>
-          <div className="grid md:grid-cols-2 gap-8 max-w-4xl mx-auto">
-            {sampleProducts.map((product) => (
-              <GlassCard key={product.id} className="overflow-hidden">
-                <div className="aspect-video bg-gradient-to-br from-gray-800 to-gray-900 rounded-lg mb-4 flex items-center justify-center">
-                  <span className="text-gray-400">Product Image</span>
-                </div>
-                <h3 className="text-xl font-semibold mb-2">{product.name}</h3>
-                <p className="text-gray-400 mb-2">{product.category}</p>
-                <div className="flex justify-between items-center">
-                  <span className="text-2xl font-bold text-blue-400">{product.price}</span>
-                  <button className="glass-button px-4 py-2 bg-blue-600 hover:bg-blue-700">
-                    Add to Cart
-                  </button>
-                </div>
-              </GlassCard>
+          <div className="flex items-center justify-center gap-3 mb-4">
+            <Star className="h-8 w-8 text-yellow-400" />
+            <h2 className="text-4xl font-bold gradient-text">Featured Products</h2>
+            <Star className="h-8 w-8 text-yellow-400" />
+          </div>
+          <p className="text-center text-gray-300 mb-12 max-w-2xl mx-auto">
+            Discover our hand-picked selection of premium tech products with cutting-edge features and unbeatable performance.
+          </p>
+          <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
+            {featuredProducts.slice(0, 6).map((product) => (
+              <ProductCard
+                key={product.id}
+                product={product}
+                onAddToCart={(product) => console.log('Add to cart:', product.name)}
+                onViewDetails={(product) => console.log('View details:', product.name)}
+              />
+            ))}
+          </div>
+          <div className="text-center mt-12">
+            <Link href="/category/all" className="glass-button bg-blue-600 hover:bg-blue-700 px-8 py-4 text-lg font-semibold">
+              View All Products
+            </Link>
+          </div>
+        </div>
+      </section>
+
+      {/* New Arrivals */}
+      <section className="py-16 px-4 bg-gradient-to-r from-purple-900/20 to-blue-900/20">
+        <div className="container mx-auto">
+          <div className="flex items-center justify-center gap-3 mb-4">
+            <Zap className="h-8 w-8 text-green-400" />
+            <h2 className="text-4xl font-bold gradient-text">New Arrivals</h2>
+            <Zap className="h-8 w-8 text-green-400" />
+          </div>
+          <p className="text-center text-gray-300 mb-12 max-w-2xl mx-auto">
+            Stay ahead with the latest technology releases and innovations in the market.
+          </p>
+          <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6">
+            {newProducts.slice(0, 4).map((product) => (
+              <ProductCard
+                key={product.id}
+                product={product}
+                onAddToCart={(product) => console.log('Add to cart:', product.name)}
+                onViewDetails={(product) => console.log('View details:', product.name)}
+              />
+            ))}
+          </div>
+        </div>
+      </section>
+
+      {/* Special Offers */}
+      <section className="py-16 px-4">
+        <div className="container mx-auto">
+          <div className="flex items-center justify-center gap-3 mb-4">
+            <TrendingUp className="h-8 w-8 text-red-400" />
+            <h2 className="text-4xl font-bold gradient-text">Special Offers</h2>
+            <TrendingUp className="h-8 w-8 text-red-400" />
+          </div>
+          <p className="text-center text-gray-300 mb-12 max-w-2xl mx-auto">
+            Don't miss out on these incredible deals and limited-time discounts on premium products.
+          </p>
+          <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
+            {discountedProducts.slice(0, 6).map((product) => (
+              <ProductCard
+                key={product.id}
+                product={product}
+                onAddToCart={(product) => console.log('Add to cart:', product.name)}
+                onViewDetails={(product) => console.log('View details:', product.name)}
+              />
             ))}
           </div>
         </div>
