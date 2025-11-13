@@ -1,11 +1,13 @@
 /** @type {import('next').NextConfig} */
 const nextConfig = {
+  output: 'export',
+  trailingSlash: true,
+  skipTrailingSlashRedirect: true,
   images: {
-    domains: ['images.unsplash.com'],
     unoptimized: true,
   },
-  trailingSlash: true,
-  assetPrefix: process.env.NODE_ENV === 'production' ? '' : '',
+  assetPrefix: process.env.NODE_ENV === 'production' ? '/WebSecurity-Tech-Store' : '',
+  basePath: process.env.NODE_ENV === 'production' ? '/WebSecurity-Tech-Store' : '',
 }
 
 module.exports = nextConfig
