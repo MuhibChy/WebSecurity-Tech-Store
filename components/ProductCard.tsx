@@ -2,7 +2,7 @@
 
 import { useState } from 'react'
 import Link from 'next/link'
-import { Star, ShoppingCart, Heart, Eye } from 'lucide-react'
+import { Star, ShoppingCart, Heart, Eye, Shield, Laptop, Monitor, Gamepad2, Smartphone, Headphones, Router, Lock, Package } from 'lucide-react'
 import GlassCard from './ui/GlassCard'
 import { Product } from '@/lib/products'
 
@@ -14,6 +14,19 @@ interface ProductCardProps {
 
 export default function ProductCard({ product, onAddToCart, onViewDetails }: ProductCardProps) {
   const [isWishlisted, setIsWishlisted] = useState(false)
+
+  const getCategoryIcon = (category: string) => {
+    const cat = (category || '').toLowerCase()
+    if (cat.includes('security')) return <Shield className="h-14 w-14 text-red-400 drop-shadow-[0_0_12px_rgba(248,113,113,0.5)]" />
+    if (cat.includes('laptop')) return <Laptop className="h-14 w-14 text-blue-400 drop-shadow-[0_0_12px_rgba(96,165,250,0.5)]" />
+    if (cat.includes('desktop')) return <Monitor className="h-14 w-14 text-emerald-400 drop-shadow-[0_0_12px_rgba(52,211,153,0.5)]" />
+    if (cat.includes('gaming')) return <Gamepad2 className="h-14 w-14 text-purple-400 drop-shadow-[0_0_12px_rgba(192,132,252,0.5)]" />
+    if (cat.includes('phone') || cat.includes('mobile')) return <Smartphone className="h-14 w-14 text-yellow-400 drop-shadow-[0_0_12px_rgba(250,204,21,0.5)]" />
+    if (cat.includes('accessor')) return <Headphones className="h-14 w-14 text-pink-400 drop-shadow-[0_0_12px_rgba(244,114,182,0.5)]" />
+    if (cat.includes('network')) return <Router className="h-14 w-14 text-cyan-400 drop-shadow-[0_0_12px_rgba(34,211,238,0.5)]" />
+    if (cat.includes('soft')) return <Lock className="h-14 w-14 text-orange-400 drop-shadow-[0_0_12px_rgba(251,146,60,0.5)]" />
+    return <Package className="h-14 w-14 text-blue-400 drop-shadow-[0_0_12px_rgba(96,165,250,0.5)]" />
+  }
 
   const handleAddToCart = (e: React.MouseEvent) => {
     e.stopPropagation()
@@ -40,11 +53,11 @@ export default function ProductCard({ product, onAddToCart, onViewDetails }: Pro
         className="group relative overflow-hidden cursor-pointer h-full flex flex-col"
         hover={false}
       >
-      {/* Product Image */}
-      <div className="relative aspect-square bg-gradient-to-br from-gray-800 to-gray-900 rounded-lg mb-4 overflow-hidden">
-        {/* Placeholder for product image */}
-        <div className="absolute inset-0 flex items-center justify-center">
-          <span className="text-gray-400 text-sm">Product Image</span>
+      {/* Product Image / Visual Showcase */}
+      <div className="relative aspect-square bg-gradient-to-br from-slate-900 via-slate-800 to-indigo-950/70 rounded-xl mb-4 overflow-hidden flex items-center justify-center border border-white/10 group-hover:border-blue-500/40 transition-all">
+        <div className="transform group-hover:scale-110 transition-transform duration-500 flex flex-col items-center justify-center">
+          {getCategoryIcon(product.category)}
+          <span className="text-[11px] text-gray-400 mt-2 font-semibold tracking-wider uppercase">{product.category}</span>
         </div>
         
         {/* Badges */}

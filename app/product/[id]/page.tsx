@@ -1,13 +1,12 @@
 import Header from '@/components/Header'
 import Footer from '@/components/Footer'
 import ProductPageClient from '@/components/ProductPageClient'
+import { products } from '@/lib/products'
 
 // Generate static params for all products
 export async function generateStaticParams() {
-  const productIds = [1, 2, 3, 4, 5, 6, 7, 8, 9] // All product IDs
-  
-  return productIds.map((id) => ({
-    id: id.toString(),
+  return products.map((product) => ({
+    id: product.id.toString(),
   }))
 }
 
@@ -24,7 +23,7 @@ export default function ProductDetailPage({ params }: ProductPageProps) {
     <div className="min-h-screen">
       <Header />
       
-      <main className="pt-32 pb-16 px-4">
+      <main className="pt-44 md:pt-48 pb-16 px-4">
         <ProductPageClient productId={productId} />
       </main>
 

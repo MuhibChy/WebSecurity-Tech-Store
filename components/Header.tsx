@@ -72,13 +72,14 @@ export default function Header() {
         </div>
 
         {/* Navigation */}
-        <nav className={`${isMenuOpen ? 'block' : 'hidden'} md:block`}>
-          <div className="flex flex-col md:flex-row md:items-center md:justify-center space-y-2 md:space-y-0 md:space-x-6">
+        <nav className={`${isMenuOpen ? 'block' : 'hidden'} md:block mt-2`}>
+          <div className="flex flex-col md:flex-row md:items-center md:justify-center gap-1 md:gap-2 flex-wrap">
             {categories.map((category) => (
               <Link
                 key={category.slug}
                 href={`/category/${category.slug}`}
-                className="glass-button text-sm hover:text-blue-400 transition-colors"
+                className="px-3.5 py-1.5 rounded-lg text-sm font-medium text-gray-200 hover:text-white hover:bg-white/10 transition-all border border-transparent hover:border-white/10 text-center"
+                onClick={() => setIsMenuOpen(false)}
               >
                 {category.name}
               </Link>

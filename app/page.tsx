@@ -13,9 +13,20 @@ export default function Home() {
   const newProducts = getNewProducts()
   const discountedProducts = getDiscountedProducts()
 
+  const categoryCountMap: Record<string, string> = {
+    'security-systems': '58+ Products',
+    'laptops': '44+ Products',
+    'desktops': '24+ Products',
+    'gaming-pcs': '31+ Products',
+    'mobile-phones': '62+ Products',
+    'accessories': '44+ Products',
+    'networking': '46+ Products',
+    'software': '63+ Products',
+  }
+
   const featuredCategories = categories.map(category => ({
     ...category,
-    count: `${Math.floor(Math.random() * 50) + 20}+ Products`,
+    count: categoryCountMap[category.id] || '30+ Products',
     color: {
       'security-systems': 'text-red-400',
       'laptops': 'text-blue-400',
@@ -33,7 +44,7 @@ export default function Home() {
       <Header />
       
       {/* Hero Section */}
-      <section className="pt-32 pb-16 px-4">
+      <section className="pt-44 md:pt-48 pb-16 px-4">
         <div className="container mx-auto text-center">
           <div className="max-w-4xl mx-auto">
             <h1 className="text-5xl md:text-7xl font-bold mb-6 gradient-text animate-float">

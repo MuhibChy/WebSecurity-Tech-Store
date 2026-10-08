@@ -2,7 +2,7 @@
 
 import { useState } from 'react'
 import Link from 'next/link'
-import { Star, ShoppingCart, Heart, Share2, Truck, Shield, RotateCcw, ChevronLeft } from 'lucide-react'
+import { Star, ShoppingCart, Heart, Share2, Truck, Shield, RotateCcw, ChevronLeft, Laptop, Monitor, Gamepad2, Smartphone, Headphones, Router, Lock, Package } from 'lucide-react'
 import GlassCard from './ui/GlassCard'
 import { getProductById, products, Product } from '@/lib/products'
 
@@ -14,8 +14,21 @@ export default function ProductPageClient({ productId }: ProductPageClientProps)
   const product = getProductById(productId)
   
   const [quantity, setQuantity] = useState(1)
-  const [selectedImage, setSelectedImage] = useState(0)
+  const [selectedImage, setSelectedImage] = useState(1)
   const [isWishlisted, setIsWishlisted] = useState(false)
+
+  const getCategoryIcon = (category: string) => {
+    const cat = (category || '').toLowerCase()
+    if (cat.includes('security')) return <Shield className="h-28 w-28 text-red-400 drop-shadow-[0_0_20px_rgba(248,113,113,0.6)]" />
+    if (cat.includes('laptop')) return <Laptop className="h-28 w-28 text-blue-400 drop-shadow-[0_0_20px_rgba(96,165,250,0.6)]" />
+    if (cat.includes('desktop')) return <Monitor className="h-28 w-28 text-emerald-400 drop-shadow-[0_0_20px_rgba(52,211,153,0.6)]" />
+    if (cat.includes('gaming')) return <Gamepad2 className="h-28 w-28 text-purple-400 drop-shadow-[0_0_20px_rgba(192,132,252,0.6)]" />
+    if (cat.includes('phone') || cat.includes('mobile')) return <Smartphone className="h-28 w-28 text-yellow-400 drop-shadow-[0_0_20px_rgba(250,204,21,0.6)]" />
+    if (cat.includes('accessor')) return <Headphones className="h-28 w-28 text-pink-400 drop-shadow-[0_0_20px_rgba(244,114,182,0.6)]" />
+    if (cat.includes('network')) return <Router className="h-28 w-28 text-cyan-400 drop-shadow-[0_0_20px_rgba(34,211,238,0.6)]" />
+    if (cat.includes('soft')) return <Lock className="h-28 w-28 text-orange-400 drop-shadow-[0_0_20px_rgba(251,146,60,0.6)]" />
+    return <Package className="h-28 w-28 text-blue-400 drop-shadow-[0_0_20px_rgba(96,165,250,0.6)]" />
+  }
 
   if (!product) {
     return (
@@ -72,24 +85,18 @@ export default function ProductPageClient({ productId }: ProductPageClientProps)
       <div className="grid lg:grid-cols-2 gap-12 mb-16">
         {/* Product Images */}
         <div className="space-y-4">
-          <GlassCard className="aspect-square bg-gradient-to-br from-gray-800 to-gray-900 flex items-center justify-center">
-            <span className="text-gray-400">Product Image</span>
+          <GlassCard className="aspect-square bg-gradient-to-br from-slate-900 via-slate-800 to-indigo-950/70 flex flex-col items-center justify-center border border-white/10 relative overflow-hidden" hover={false}>
+            <div className="transform transition-transform duration-500 flex flex-col items-center justify-center">
+              {getCategoryIcon(product.category)}
+              <span className="text-sm text-gray-300 mt-4 font-semibold tracking-wider uppercase">{product.category}</span>
+              <span className="text-xs text-blue-400 mt-1 font-mono">{product.brand}</span>
+            </div>
+            {product.isNew && (
+              <span className="absolute top-4 left-4 bg-green-500 text-white text-xs px-3 py-1 rounded-full font-medium">
+                NEW RELEASE
+              </span>
+            )}
           </GlassCard>
-          
-          {/* Thumbnail Images */}
-          <div className="grid grid-cols-4 gap-4">
-            {[1, 2, 3, 4].map((index) => (
-              <button
-                key={index}
-                onClick={() => setSelectedImage(index)}
-                className={`glass-card aspect-square bg-gradient-to-br from-gray-800 to-gray-900 flex items-center justify-center ${
-                  selectedImage === index ? 'ring-2 ring-blue-400' : ''
-                }`}
-              >
-                <span className="text-xs text-gray-400">{index}</span>
-              </button>
-            ))}
-          </div>
         </div>
 
         {/* Product Info */}

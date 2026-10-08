@@ -5,6 +5,7 @@ import CategoryPageClient from '@/components/CategoryPageClient'
 // Generate static params for all categories
 export async function generateStaticParams() {
   const categoryIds = [
+    'all',
     'security-systems',
     'laptops', 
     'desktops',
@@ -31,7 +32,7 @@ export default function CategoryPage({ params }: CategoryPageProps) {
     <div className="min-h-screen">
       <Header />
       
-      <main className="pt-32 pb-16 px-4">
+      <main className="pt-44 md:pt-48 pb-16 px-4">
         <CategoryPageClient categorySlug={params.slug} />
       </main>
 

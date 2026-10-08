@@ -1,6 +1,7 @@
 'use client'
 
 import { useState } from 'react'
+import Link from 'next/link'
 import GlassCard from '@/components/ui/GlassCard'
 import { 
   BarChart3, 
@@ -12,7 +13,8 @@ import {
   Eye,
   Edit,
   Trash2,
-  Plus
+  Plus,
+  ArrowLeft
 } from 'lucide-react'
 
 export default function Dashboard() {
@@ -45,10 +47,17 @@ export default function Dashboard() {
   ]
 
   return (
-    <div className="min-h-screen pt-8 px-4">
+    <div className="min-h-screen pt-12 pb-16 px-4">
       <div className="container mx-auto">
-        {/* Header */}
+        {/* Navigation & Header */}
         <div className="mb-8">
+          <Link 
+            href="/" 
+            className="inline-flex items-center gap-2 px-4 py-2 rounded-lg glass text-sm text-gray-300 hover:text-white hover:bg-white/10 transition-all mb-6"
+          >
+            <ArrowLeft className="h-4 w-4" />
+            Back to Store
+          </Link>
           <h1 className="text-4xl font-bold gradient-text mb-2">Admin Dashboard</h1>
           <p className="text-gray-400">Manage your WebSecurity.com store</p>
         </div>

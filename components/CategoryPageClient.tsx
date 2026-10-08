@@ -19,12 +19,16 @@ export default function CategoryPageClient({ categorySlug }: CategoryPageClientP
   const [showFilters, setShowFilters] = useState(false)
 
   // Find category
-  const category = categories.find(cat => cat.id === categorySlug)
+  const isAllCategories = categorySlug === 'all'
+  const category = isAllCategories
+    ? { id: 'all', name: 'All Products', description: 'Browse our complete catalog of security systems and cutting-edge tech products' }
+    : categories.find(cat => cat.id === categorySlug)
   
   // Get products for this category
   const categoryProducts = useMemo(() => {
     return products.filter(product => {
-      const categoryMatch = product.category.toLowerCase().replace(/\s+/g, '-') === categorySlug ||
+      const categoryMatch = isAllCategories ||
+                           product.category.toLowerCase().replace(/\s+/g, '-') === categorySlug ||
                            product.category === category?.name
       
       const priceMatch = product.price >= priceRange[0] && product.price <= priceRange[1]
@@ -36,7 +40,7 @@ export default function CategoryPageClient({ categorySlug }: CategoryPageClientP
       
       return categoryMatch && priceMatch && brandMatch && subcategoryMatch
     })
-  }, [categorySlug, category?.name, priceRange, selectedBrands, selectedSubcategories])
+  }, [categorySlug, category?.name, isAllCategories, priceRange, selectedBrands, selectedSubcategories])
 
   // Sort products
   const sortedProducts = useMemo(() => {
